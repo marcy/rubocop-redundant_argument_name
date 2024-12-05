@@ -12,24 +12,16 @@ module RuboCop
 
         MSG = 'Argument name can be omitted for brevity when it matches the parameter name.'
 
-        def_node_matcher :hash_argument_with_redundancy?, <<~PATTERN
-          (send _ _ (hash <(pair (sym $_) (send nil? $_)) ...>))
-        PATTERN
+        def on_hash(node)
+          node.pairs.each do |pair|
+            key, value = pair.key, pair.value
 
-        def on_send(node)
-          hash_argument_with_redundancy?(node) do |key, value|
-            next unless key == value
+            next unless key.value == value.node_parts[1]
 
-            add_offense(node) do |corrector|
-              corrector.replace(node, corrected_code(node, key))
+            add_offense(pair, message: MSG) do |corrector|
+              corrector.replace(pair, "#{key.value}:")
             end
           end
-        end
-
-        private
-
-        def corrected_code(node, redundant_key)
-          node.source.gsub(/#{redundant_key}:\s*#{redundant_key}/, "#{redundant_key}:")
         end
       end
     end

@@ -1,11 +1,24 @@
 # frozen_string_literal: true
 
 RSpec.describe RuboCop::Cop::Style::RedundantArgumentName, :config do
+  context 'when hash name matches local variable' do
+    it 'registers an offense and corrects it' do
+      expect_offense(<<~RUBY)
+        {foo: foo}
+         ^^^^^^^^ Argument name can be omitted for brevity when it matches the parameter name.
+      RUBY
+
+      expect_correction(<<~RUBY)
+        {foo:}
+      RUBY
+    end
+  end
+
   context 'when argument name matches local variable' do
     it 'registers an offense and corrects it' do
       expect_offense(<<~RUBY)
         fun(foo: foo)
-        ^^^^^^^^^^^^^ Argument name can be omitted for brevity when it matches the parameter name.
+            ^^^^^^^^ Argument name can be omitted for brevity when it matches the parameter name.
       RUBY
 
       expect_correction(<<~RUBY)
@@ -26,7 +39,7 @@ RSpec.describe RuboCop::Cop::Style::RedundantArgumentName, :config do
     it 'registers an offense only for the redundant arguments and corrects them' do
       expect_offense(<<~RUBY)
         fun(foo: foo, bar: baz)
-        ^^^^^^^^^^^^^^^^^^^^^^^ Argument name can be omitted for brevity when it matches the parameter name.
+            ^^^^^^^^ Argument name can be omitted for brevity when it matches the parameter name.
       RUBY
 
       expect_correction(<<~RUBY)
