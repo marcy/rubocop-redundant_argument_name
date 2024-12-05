@@ -27,6 +27,14 @@ RSpec.describe RuboCop::Cop::Style::RedundantArgumentName, :config do
     end
   end
 
+  context 'when omit the parameter name' do
+    it 'does not register an offense' do
+      expect_no_offenses(<<~RUBY)
+        fun(foo:)
+      RUBY
+    end
+  end
+
   context 'when argument name does not match local variable' do
     it 'does not register an offense' do
       expect_no_offenses(<<~RUBY)
