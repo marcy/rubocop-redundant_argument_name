@@ -2,6 +2,11 @@
 
 ```rb
 # bad
+{foo: foo}
+# good
+{foo:}
+
+# bad
 func(foo: foo)
 # good
 func(foo:)
