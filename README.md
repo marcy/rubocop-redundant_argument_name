@@ -2,14 +2,14 @@
 
 ```rb
 # bad
-# func(foo: foo)
+func(foo: foo)
 # good
-# func(foo:)
+func(foo:)
 
 # bad
-# func(foo: foo, bar: baz)
+func(foo: foo, bar: baz)
 # good
-# func(foo:, bar: bar)
+func(foo:, bar: bar)
 ```
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rubocop/redundant_argument_name`. To experiment with that code, run `bin/console` for an interactive prompt.
