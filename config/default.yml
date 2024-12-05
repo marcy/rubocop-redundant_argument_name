@@ -1,0 +1,4 @@
+Style/RedundantArgumentName:
+  Description: 'Write a description of the cop.'
+  Enabled: false
+  VersionAdded: '1.0.0'

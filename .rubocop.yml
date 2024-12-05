@@ -1,0 +1,3 @@
+Naming/FileName:
+ Exclude:
+   - lib/rubocop-redundant_argument_name.rb
